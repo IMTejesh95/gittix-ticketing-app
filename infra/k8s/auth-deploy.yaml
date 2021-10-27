@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata: 
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image:  imtejesh95/auth:latest
+---
+apiVersion: v1
+kid: Service
+metadata:
+  name: auth-svc
+spec:
+  selector:
+    app: auth
+  ports:
+    - name: auth
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+
