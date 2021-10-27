@@ -17,7 +17,7 @@ spec:
           image:  imtejesh95/auth:latest
 ---
 apiVersion: v1
-kid: Service
+kind: Service
 metadata:
   name: auth-svc
 spec:
