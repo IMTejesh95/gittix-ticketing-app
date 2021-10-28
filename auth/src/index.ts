@@ -4,11 +4,16 @@ import { currentUserRouter } from './routes/current-user';
 import { signInRouter } from './routes/signin';
 import { signOutRouter } from './routes/signout';
 import { signUpRouter } from './routes/signup';
+import errorhandler from './middlewares/error-handler';
 
 
 const app = express();
-app.use(json());
 
+// middlewares
+app.use(json());
+app.use(errorhandler)
+
+// routes
 app.use(currentUserRouter);
 app.use(signInRouter);
 app.use(signOutRouter);
