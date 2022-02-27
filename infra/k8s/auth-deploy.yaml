@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-deploy
+  name: auth
 spec:
   replicas: 1
   selector:
@@ -15,10 +15,12 @@ spec:
       containers:
         - name: auth
           image:  imtejesh95/auth:latest
-          resources:
-            limits:
-              memory: "128Mi"
-              cpu: "500m"
+          env:
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
 ---
 apiVersion: v1
 kind: Service

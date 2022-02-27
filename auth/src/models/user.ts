@@ -17,16 +17,28 @@ interface UserModel extends mongo.Model<UserDoc> {
 }
 
 
-const userSchema = new mongo.Schema({
+const userSchema = new mongo.Schema(
+  {
     email: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     password: {
-        type: String,
-        required: true
-    }
-});
+      type: String,
+      required: true,
+    },
+  },
+  {
+    toJSON: {
+      transform(doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.password;
+      },
+      versionKey: false,
+    },
+  }
+);
 
 userSchema.pre("save", async function(done){
     console.log("In pre-save");
