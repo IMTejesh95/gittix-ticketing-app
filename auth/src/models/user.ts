@@ -40,14 +40,13 @@ const userSchema = new mongo.Schema(
   }
 );
 
-userSchema.pre("save", async function(done){
-    console.log("In pre-save");
-    if(this.isModified('password')){
-        const hashedPassword = await Password.toHash(this.get('password'));
-        this.set('password', hashedPassword);
-    }
-    done();
-})
+userSchema.pre("save", async function (done) {
+  if (this.isModified("password")) {
+    const hashedPassword = await Password.toHash(this.get("password"));
+    this.set("password", hashedPassword);
+  }
+  done();
+});
 
 userSchema.statics.build = (attrs: UserAttrs) => {
     return new User(attrs);
