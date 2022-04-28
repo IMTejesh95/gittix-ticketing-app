@@ -16,4 +16,12 @@ build:
         manual: 
           - src: 'src/**/*.ts'
             dest: .
+    - image: imtejesh95/react-client-app
+      context: client
+      docker: 
+        dockerfile: Dockerfile
+      sync:
+        manual: 
+          - src: '**/*.js'
+            dest: .
   
