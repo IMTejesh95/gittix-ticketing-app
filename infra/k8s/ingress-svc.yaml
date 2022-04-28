@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-svc
+  namespace: udemy-course
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/use-regx: "true"
@@ -15,5 +16,12 @@ spec:
             backend:
               service:
                 name: auth-svc
+                port: 
+                  number: 3000
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: client-ui-svc
                 port: 
                   number: 3000
