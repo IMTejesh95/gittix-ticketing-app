@@ -5,6 +5,7 @@ import request from "supertest";
 
 declare global {
   function signin(): Promise<string[]>;
+  function signup(): Promise<string[]>;
 }
 
 let mongo: MongoMemoryServer;
@@ -34,6 +35,22 @@ global.signin = async (): Promise<string[]> => {
 
   const response = await request(app)
     .post("/api/users/signin")
+    .send({
+      email,
+      password,
+    })
+    .expect(201);
+
+  const cookie = response.get("Set-Cookie");
+  return cookie;
+};
+
+global.signup = async (): Promise<string[]> => {
+  const email = "test@test.com";
+  const password = "password";
+
+  const response = await request(app)
+    .post("/api/users/signup")
     .send({
       email,
       password,
