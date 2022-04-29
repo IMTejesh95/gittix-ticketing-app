@@ -1,5 +1,5 @@
 {
-  "name": "@itejas19/gittix-common",
+  "name": "@tjgittix/common",
   "version": "1.0.0",
   "description": "GitTix application common shared library.",
   "main": "build/index.js",
