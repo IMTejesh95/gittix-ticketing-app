@@ -1,6 +1,6 @@
 {
   "name": "@tjgittix/common",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "GitTix application common shared library.",
   "main": "build/index.js",
   "types": "build/index.d.ts",
