@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken";
 declare global {
   function signin(): Promise<string[]>;
   function signup(): string[];
+  function generateMongoId(): string;
 }
 
 let mongo: MongoMemoryServer;
@@ -48,7 +49,7 @@ global.signin = async (): Promise<string[]> => {
 
 global.signup = () => {
   const payload = {
-    id: "du92j3nd9e8n",
+    id: generateMongoId(), //"du92j3nd9e8n",
     email: "test@test.com",
   };
   const token = jwt.sign(payload, process.env.JWT_KEY!);
@@ -58,4 +59,9 @@ global.signup = () => {
   const encodedSession = Buffer.from(sessionJSON).toString("base64");
 
   return [`session=${encodedSession}`];
+};
+
+global.generateMongoId = () => {
+  const id = new mongoose.Types.ObjectId().toHexString();
+  return id;
 };

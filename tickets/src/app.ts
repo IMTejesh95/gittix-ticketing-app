@@ -7,6 +7,7 @@ import { currentUser, errorhandler, NotFoundError } from "@tjgittix/common";
 import { createTicketRouter } from "./routes/create";
 import { readTicketRouter } from "./routes/read";
 import { listTicketsRouter } from "./routes/list";
+import { updateTicketRouter } from "./routes/update";
 
 const app = express();
 app.set("trust proxy", true);
@@ -24,6 +25,7 @@ app.use(currentUser);
 app.use(createTicketRouter);
 app.use(readTicketRouter);
 app.use(listTicketsRouter);
+app.use(updateTicketRouter);
 
 app.get("*", () => {
   throw new NotFoundError();

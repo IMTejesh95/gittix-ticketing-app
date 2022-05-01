@@ -4,8 +4,10 @@ import { TicketDoc } from "../../models/ticket";
 import mongo from "mongoose";
 
 it("returns 404 if ticket not found", async () => {
-  const id = new mongo.Types.ObjectId().toHexString();
-  await request(app).get(`/api/tickets/${id}`).send().expect(404);
+  await request(app)
+    .get(`/api/tickets/${generateMongoId()}`)
+    .send()
+    .expect(404);
 });
 
 it("returns ticket if found", async () => {
