@@ -6,6 +6,7 @@ import cookieSession from "cookie-session";
 import { currentUser, errorhandler, NotFoundError } from "@tjgittix/common";
 import { createTicketRouter } from "./routes/create";
 import { readTicketRouter } from "./routes/read";
+import { listTicketsRouter } from "./routes/list";
 
 const app = express();
 app.set("trust proxy", true);
@@ -22,6 +23,7 @@ app.use(currentUser);
 // routes
 app.use(createTicketRouter);
 app.use(readTicketRouter);
+app.use(listTicketsRouter);
 
 app.get("*", () => {
   throw new NotFoundError();
