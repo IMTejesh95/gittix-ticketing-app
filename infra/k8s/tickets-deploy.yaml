@@ -18,7 +18,15 @@ spec:
           image:  imtejesh95/tickets:latest
           env:
             - name: MONGO_URI
-              value: "mongodb://tickets-mongo-svc:27017/tickets"          
+              value: "mongodb://tickets-mongo-svc:27017/tickets"        
+            - name: NATS_URL
+              value: "http://nats-svc:4222" 
+            - name: NATS_CLUSTER_ID
+              value: "ticketing" 
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name                                             
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:

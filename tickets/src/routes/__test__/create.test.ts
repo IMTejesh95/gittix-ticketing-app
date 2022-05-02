@@ -1,6 +1,7 @@
 import request from "supertest";
 import { app } from "../../app";
 import { Ticket } from "../../models/ticket";
+import { stan } from "../../events/nats-client";
 
 it("has a route listing to /api/tickets for post", async () => {
   const resp = await request(app).post("/api/tickets").send({});
@@ -74,4 +75,18 @@ it("creates a ticket eith valid input data", async () => {
   tickets = await Ticket.find({});
   expect(tickets.length).toEqual(1);
   expect(tickets[0].price).toEqual(10);
+});
+
+
+it("publishes an event", async () => {
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", signup())
+    .send({
+      title: "Test Title",
+      price: 10,
+    })
+    .expect(201);
+
+  expect(stan.client.publish).toHaveBeenCalled();
 });
