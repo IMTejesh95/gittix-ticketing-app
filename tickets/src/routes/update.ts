@@ -6,6 +6,8 @@ import {
 } from "@tjgittix/common";
 import { Request, Response, Router } from "express";
 import { body } from "express-validator";
+import { stan } from "../events/nats-client";
+import { TicketUpdatedPublisher } from "../events/publishers/ticket-updated-publisher";
 import { Ticket } from "../models/ticket";
 
 const router = Router();
@@ -21,13 +23,27 @@ router.put(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const ticket = await Ticket.findByIdAndUpdate(req.params.id, req.body);
+    const ticket = await Ticket.findById(req.params.id);
 
     if (!ticket) throw new NotFoundError();
+
     if (ticket && ticket.userId !== req.currentUser?.id)
       throw new NotAuthorizedError();
 
-    res.sendStatus(200);
+    ticket.set({
+      title: req.body.title,
+      price: req.body.price,
+    });
+    await ticket.save();
+
+    await new TicketUpdatedPublisher(stan.client).publish({
+      id: ticket.id,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId,
+    });
+
+    res.send(ticket);
   }
 );
 

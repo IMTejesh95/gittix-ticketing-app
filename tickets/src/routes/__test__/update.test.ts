@@ -1,5 +1,6 @@
 import request from "supertest";
 import { app } from "../../app";
+import { stan } from "../../events/nats-client";
 
 it("should return 404 if ticket with supplied id does not exists", async () => {
   await request(app)
@@ -103,4 +104,32 @@ it("should return 200 after successful update", async () => {
 
   expect(getResp.body.title).toEqual("Test Ticket");
   expect(getResp.body.price).toEqual(24);
+});
+
+
+it("publishes an event", async () => {
+  const cookie = signup();
+  const resp = await request(app)
+    .post("/api/tickets")
+    .set("Cookie", cookie)
+    .send({
+      title: "Ticket",
+      price: 20,
+    });
+
+  await request(app)
+    .put(`/api/tickets/${resp.body.id}`)
+    .set("Cookie", cookie)
+    .send({
+      title: "Test Ticket",
+      price: 24,
+    })
+    .expect(200);
+
+  const getResp = await request(app)
+    .get(`/api/tickets/${resp.body.id}`)
+    .send()
+    .expect(200);
+
+  expect(stan.client.publish).toHaveBeenCalled();
 });
