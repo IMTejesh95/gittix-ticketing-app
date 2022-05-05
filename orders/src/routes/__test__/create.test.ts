@@ -1,5 +1,6 @@
 import request from "supertest";
 import { app } from "../../app";
+import { stan } from "../../events/nats-client";
 import { Order, OrderStatus } from "../../models/order";
 import { Ticket } from "../../models/ticket";
 
@@ -24,6 +25,7 @@ it("returns 400 if ticket already reserved", async () => {
     ticket,
     userId: "dd9jndj09wd98n",
     status: OrderStatus.Created,
+    expiresAt: new Date(),
   });
   await order.save();
 
@@ -55,4 +57,20 @@ it("returns 201 if ticket reserved success", async () => {
   expect(resp.body.status).toBe(OrderStatus.Created);
 });
 
-it.todo("emits an order created event");
+it("emits an order created event", async () => {
+  const ticket = Ticket.build({
+    title: "Test Ticket",
+    price: 10,
+  });
+  await ticket.save();
+
+  const resp = await request(app)
+    .post("/api/orders")
+    .set("Cookie", signup())
+    .send({
+      ticketId: ticket.id,
+    })
+    .expect(201);
+
+  expect(stan.client.publish).toHaveBeenCalled();
+});

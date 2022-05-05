@@ -7,6 +7,8 @@ import {
 } from "@tjgittix/common";
 import { Request, Response, Router } from "express";
 import { body } from "express-validator";
+import { stan } from "../events/nats-client";
+import { OrderCreatedPublisher } from "../events/publishers/order-created-publisher";
 import { Order } from "../models/order";
 import { Ticket } from "../models/ticket";
 
@@ -43,6 +45,17 @@ router.post(
       expiresAt: expiration,
     });
     await order.save();
+
+    new OrderCreatedPublisher(stan.client).publish({
+      id: order.id,
+      status: order.status,
+      userId: order.userId,
+      expiresAt: order.expiresAt?.toISOString(),
+      ticket: {
+        id: ticket.id,
+        price: ticket.price,
+      },
+    });
 
     res.status(201).send(order);
   }

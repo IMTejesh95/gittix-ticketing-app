@@ -4,15 +4,15 @@ import { TicketDoc } from "./ticket";
 
 interface OrderAttrs {
   userId: string;
-  status?: OrderStatus;
-  expiresAt?: Date;
+  status: OrderStatus;
+  expiresAt: Date;
   ticket: TicketDoc;
 }
 
 export interface OrderDoc extends mongo.Document {
   userId: string;
-  status?: string;
-  expiresAt?: Date;
+  status: OrderStatus;
+  expiresAt: Date;
   ticket: TicketDoc;
 }
 

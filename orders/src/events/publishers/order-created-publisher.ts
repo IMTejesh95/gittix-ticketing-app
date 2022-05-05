@@ -1,5 +1,5 @@
-import { Publisher, Subjects, TicketCreatedEvent } from "@tjgittix/common";
+import { Publisher, Subjects, OrderCreatedEvent } from "@tjgittix/common";
 
-export class TicketCreatedPublisher extends Publisher<TicketCreatedEvent> {
-  subject: Subjects.TicketCreated = Subjects.TicketCreated;
+export class OrderCreatedPublisher extends Publisher<OrderCreatedEvent> {
+  subject: Subjects.OrderCreated = Subjects.OrderCreated;
 }
