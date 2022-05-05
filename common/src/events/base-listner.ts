@@ -9,7 +9,7 @@ interface Event {
 export abstract class Listner<T extends Event> {
   abstract subject: T["subject"];
   abstract queueGroupName: string;
-  abstract onMessage(data: T["data"], message: Message): void;
+  abstract onMessage(data: T["data"], message: Message): Promise<void>;
 
   private client: Stan;
   protected ackWait = 5 * 1000;
@@ -34,11 +34,11 @@ export abstract class Listner<T extends Event> {
       this.subscriptionsOptions()
     );
 
-    subscription.on("message", (message: Message) => {
+    subscription.on("message", async (message: Message) => {
       console.log(`Message recieved: ${this.subject} / ${this.queueGroupName}`);
 
       const parsedData = this.parseMesaage(message);
-      this.onMessage(parsedData, message);
+      await this.onMessage(parsedData, message);
     });
   }
 
