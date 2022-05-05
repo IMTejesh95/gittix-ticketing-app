@@ -1,5 +1,3 @@
-import { Stan } from "node-nats-streaming";
-
 export const stan = {
   client: {
     publish: jest
