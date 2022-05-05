@@ -24,7 +24,14 @@ spec:
               service:
                 name: tickets-svc
                 port: 
-                  number: 3000                  
+                  number: 3000
+          - path: /api/orders
+            pathType: Prefix
+            backend:
+              service:
+                name: orders-svc
+                port: 
+                  number: 3000                                        
           - path: /
             pathType: Prefix
             backend:

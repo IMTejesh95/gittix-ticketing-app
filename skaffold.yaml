@@ -31,5 +31,13 @@ build:
       sync:
         manual: 
           - src: 'src/**/*.ts'
-            dest: .            
+            dest: .      
+    - image: imtejesh95/orders
+      context: orders
+      docker: 
+        dockerfile: Dockerfile
+      sync:
+        manual: 
+          - src: 'src/**/*.ts'
+            dest: .                    
   
