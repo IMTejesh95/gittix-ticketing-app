@@ -10,7 +10,6 @@ export class TicketCreatedListner extends Listner<TicketCreatedEvent> {
   async onMessage(data: TicketCreatedEvent["data"], message: Message) {
     console.log("TicketCreatedListner::TicketCreatedEvent ", data);
 
-    // save data into tickets collection
     const { id, title, price } = data;
     const ticket = Ticket.build({
       id,

@@ -7,10 +7,12 @@ it("list orders for authenticated user", async () => {
   const cookie = signup();
   const tickets = await Ticket.insertMany([
     {
+      id: generateMongoId(),
       title: "ticket 1",
       price: 10,
     },
     {
+      id: generateMongoId(),
       title: "ticket 2",
       price: 20,
     },
