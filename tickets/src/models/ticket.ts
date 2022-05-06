@@ -12,6 +12,7 @@ export interface TicketDoc extends mongo.Document {
   price: number;
   userId: string;
   version: number;
+  orderId?: string;
 }
 
 interface TicketModel extends mongo.Model<TicketDoc> {
@@ -31,6 +32,9 @@ const ticketSchema = new mongo.Schema(
     userId: {
       type: String,
       required: true,
+    },
+    orderId: {
+      type: String,
     },
   },
   {
