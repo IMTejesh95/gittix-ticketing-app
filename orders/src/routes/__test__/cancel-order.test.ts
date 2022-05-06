@@ -8,6 +8,7 @@ import { Ticket } from "../../models/ticket";
 it("cancels order for provided order id", async () => {
   const cookie = signup();
   const ticket = Ticket.build({
+    id: generateMongoId(),
     title: "Test Ticket",
     price: 10,
   });
@@ -35,6 +36,7 @@ it("cancels order for provided order id", async () => {
 it("emits order cancelled event", async () => {
   const cookie = signup();
   const ticket = Ticket.build({
+    id: generateMongoId(),
     title: "Test Ticket",
     price: 10,
   });

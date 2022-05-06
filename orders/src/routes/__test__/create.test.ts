@@ -16,6 +16,7 @@ it("returns 404 if ticket does not exist", async () => {
 
 it("returns 400 if ticket already reserved", async () => {
   const ticket = Ticket.build({
+    id: generateMongoId(),
     title: "Test Ticket",
     price: 10,
   });
@@ -40,6 +41,7 @@ it("returns 400 if ticket already reserved", async () => {
 
 it("returns 201 if ticket reserved success", async () => {
   const ticket = Ticket.build({
+    id: generateMongoId(),
     title: "Test Ticket",
     price: 10,
   });
@@ -59,6 +61,7 @@ it("returns 201 if ticket reserved success", async () => {
 
 it("emits an order created event", async () => {
   const ticket = Ticket.build({
+    id: generateMongoId(),
     title: "Test Ticket",
     price: 10,
   });

@@ -5,6 +5,7 @@ import { Ticket } from "../../models/ticket";
 it("returns order with embedded ticket for order Id", async () => {
   const cookie = signup();
   const ticket = Ticket.build({
+    id: generateMongoId(),
     title: "Test Ticket",
     price: 10,
   });
