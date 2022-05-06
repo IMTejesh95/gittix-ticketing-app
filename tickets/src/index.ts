@@ -1,5 +1,7 @@
 import mongo from "mongoose";
 import { app } from "./app";
+import { OrderCancelledListner } from "./events/listners/order-cancelled-listner";
+import { OrderCreatedListner } from "./events/listners/order-created-listner";
 import { stan } from "./events/nats-client";
 
 const start = async () => {
@@ -24,6 +26,9 @@ const start = async () => {
     });
     process.on("SIGINT", () => stan.client.close());
     process.on("SIGTERM", () => stan.client.close());
+
+    new OrderCreatedListner(stan.client).listen();
+    new OrderCancelledListner(stan.client).listen();
 
     await mongo.connect(process.env.MONGO_URI);
     console.log("Connected to db!");
