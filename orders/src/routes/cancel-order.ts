@@ -12,7 +12,7 @@ import { Order } from "../models/order";
 const router = Router();
 
 router.patch(
-  "/api/orders/:id",
+  "/api/orders/cancel/:id",
   requireAuth,
   async (req: Request, res: Response) => {
     const order = await Order.findById(req.params.id).populate("ticket");

@@ -8,8 +8,6 @@ export class TicketUpdatedListner extends Listner<TicketUpdatedEvent> {
   queueGroupName: string = QUEUE_GROUP_NAME;
 
   async onMessage(data: TicketUpdatedEvent["data"], message: Message) {
-    console.log("TicketUpdatedListner::TicketUpdatedEvent ", data);
-
     const ticket = await Ticket.findByEventData(data);
     if (!ticket) throw new Error("Ticket not found!");
 

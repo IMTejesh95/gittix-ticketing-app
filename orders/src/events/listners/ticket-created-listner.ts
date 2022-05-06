@@ -8,8 +8,6 @@ export class TicketCreatedListner extends Listner<TicketCreatedEvent> {
   queueGroupName: string = QUEUE_GROUP_NAME;
 
   async onMessage(data: TicketCreatedEvent["data"], message: Message) {
-    console.log("TicketCreatedListner::TicketCreatedEvent ", data);
-
     const { id, title, price } = data;
     const ticket = Ticket.build({
       id,
