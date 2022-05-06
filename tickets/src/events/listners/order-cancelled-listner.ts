@@ -12,8 +12,6 @@ export class OrderCancelledListner extends Listner<OrderCancelledEvent> {
     data: OrderCancelledEvent["data"],
     message: Message
   ): Promise<void> {
-    console.log("OrderCancelledListner::OrderCancelledEvent ", data);
-
     const ticket = await Ticket.findById(data.ticket.id);
     if (!ticket) throw new Error("Ticket not found!");
 

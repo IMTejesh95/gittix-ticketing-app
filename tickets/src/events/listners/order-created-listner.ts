@@ -12,8 +12,6 @@ export class OrderCreatedListner extends Listner<OrderCreatedEvent> {
     data: OrderCreatedEvent["data"],
     message: Message
   ): Promise<void> {
-    console.log("OrderCreatedListner::OrderCreatedEvent ", data);
-
     const ticket = await Ticket.findById(data.ticket.id);
     if (!ticket) throw new Error("Ticket not found!");
 
