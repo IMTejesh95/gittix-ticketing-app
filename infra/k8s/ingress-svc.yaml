@@ -31,7 +31,14 @@ spec:
               service:
                 name: orders-svc
                 port: 
-                  number: 3000                                        
+                  number: 3000
+          - path: /api/payments
+            pathType: Prefix
+            backend:
+              service:
+                name: payments-svc
+                port: 
+                  number: 3000                                                           
           - path: /
             pathType: Prefix
             backend:

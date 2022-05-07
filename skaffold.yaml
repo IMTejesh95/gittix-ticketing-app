@@ -47,4 +47,12 @@ build:
       sync:
         manual: 
           - src: 'src/**/*.ts'
-            dest: .         
+            dest: .    
+    - image: imtejesh95/payments
+      context: payments
+      docker: 
+        dockerfile: Dockerfile
+      sync:
+        manual: 
+          - src: 'src/**/*.ts'
+            dest: .                   
