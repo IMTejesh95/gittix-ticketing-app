@@ -23,7 +23,7 @@ it("cancels order for provided order id", async () => {
     .expect(201);
 
   await request(app)
-    .patch(`/api/orders/${order.id}`)
+    .patch(`/api/orders/cancel/${order.id}`)
     .set("Cookie", cookie)
     .send()
     .expect(200);
@@ -51,7 +51,7 @@ it("emits order cancelled event", async () => {
     .expect(201);
 
   const resp = await request(app)
-    .patch(`/api/orders/${order.id}`)
+    .patch(`/api/orders/cancel/${order.id}`)
     .set("Cookie", cookie)
     .send()
     .expect(200);
