@@ -34,7 +34,7 @@ const orderSchema = new mongo.Schema(
     status: {
       type: String,
       enum: Object.values(OrderStatus),
-      default: OrderStatus.Created,
+      required: true,
     },
     price: {
       type: Number,

@@ -13,6 +13,10 @@ const start = async () => {
     throw new Error("NATS_CLUSTER_ID must be defined!");
   if (!process.env.NATS_CLIENT_ID)
     throw new Error("NATS_CLIENT_ID must be defined!");
+  if (!process.env.ORDER_EXP_WINDOW_SECS)
+    console.log(
+      "ORDER_EXP_WINDOW_SECS not defined using default value of 15mins"
+    );
 
   try {
     await stan.connect(

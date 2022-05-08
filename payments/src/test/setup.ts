@@ -5,8 +5,7 @@ import request from "supertest";
 import jwt from "jsonwebtoken";
 
 declare global {
-  function signin(): Promise<string[]>;
-  function signup(): string[];
+  function signup(id?: string): string[];
   function generateMongoId(): string;
 }
 
@@ -34,25 +33,9 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.signin = async (): Promise<string[]> => {
-  const email = "test@test.com";
-  const password = "password";
-
-  const response = await request(app)
-    .post("/api/users/signin")
-    .send({
-      email,
-      password,
-    })
-    .expect(201);
-
-  const cookie = response.get("Set-Cookie");
-  return cookie;
-};
-
-global.signup = () => {
+global.signup = (id?: string) => {
   const payload = {
-    id: generateMongoId(), //"du92j3nd9e8n",
+    id: id || generateMongoId(), //"du92j3nd9e8n",
     email: "test@test.com",
   };
   const token = jwt.sign(payload, process.env.JWT_KEY!);

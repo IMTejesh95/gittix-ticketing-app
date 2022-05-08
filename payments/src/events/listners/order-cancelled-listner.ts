@@ -19,7 +19,7 @@ export class OrderCancelledListner extends Listner<OrderCancelledEvent> {
   ): Promise<void> {
     const order = await Order.findByEventData(data);
 
-    if (!order) throw new NotFoundError();
+    if (!order) throw new Error("Order not found");
 
     order.set({ status: OrderStatus.Cancelled });
     await order.save();
