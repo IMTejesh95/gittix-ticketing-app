@@ -1,7 +1,7 @@
 import request from "supertest";
 import { app } from "../../app";
 import { Order, OrderStatus } from "../../models/order";
-import jwt from "jsonwebtoken";
+import { Payment } from "../../models/payment";
 
 it("checks if order exist else return 404", async () => {
   await request(app)
@@ -53,4 +53,32 @@ it("doesn't allow payments for cancelled order, throws 400", async () => {
       orderId: order.id,
     })
     .expect(400);
+});
+
+it("creates a charge for order", async () => {
+  const userId = generateMongoId();
+  const order = Order.build({
+    id: generateMongoId(),
+    userId: userId,
+    status: OrderStatus.Created,
+    price: 16,
+    version: 0,
+  });
+  await order.save();
+
+  await request(app)
+    .post("/api/payments")
+    .set("Cookie", signup(userId))
+    .send({
+      token: "tok_visa",
+      orderId: order.id,
+    })
+    .expect(201);
+
+  const payment = await Payment.findOne({
+    orderId: order.id,
+  });
+
+  expect(payment!).not.toBeNull();
+  expect(payment!.stripeId).not.toBeNull();
 });

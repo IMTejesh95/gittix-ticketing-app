@@ -1,0 +1,13 @@
+export const stripe = {
+  checkout: {
+    sessions: {
+      // @ts-ignore
+      create: jest.fn().mockImplementation(() => {
+        return {
+          id: "mock-stripe-id",
+          payment_status: "unpaid",
+        };
+      }),
+    },
+  },
+};

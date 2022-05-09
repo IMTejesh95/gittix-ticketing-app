@@ -10,6 +10,8 @@ declare global {
 }
 
 jest.mock("../events/nats-client.ts");
+process.env.STRIPE_SECRET_KEY =
+  "sk_test_51Kx6h1SFvjPxOU96X85SKGRcc2E0MAqlwtMVZ1ZJjZeolcnMRVnwXUDkeZja57cUtZFMPg1ctM4QkcmrZ6Kfc1XS00E7zSZwxA";
 
 let mongo: MongoMemoryServer;
 beforeAll(async () => {
