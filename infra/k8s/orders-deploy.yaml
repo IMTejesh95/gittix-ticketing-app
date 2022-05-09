@@ -17,6 +17,8 @@ spec:
         - name: orders
           image:  imtejesh95/orders:latest
           env:
+            - name: ORDER_EXP_WINDOW_SECS
+              value: '120'             
             - name: MONGO_URI
               value: "mongodb://orders-mongo-svc:27017/orders"        
             - name: NATS_URL

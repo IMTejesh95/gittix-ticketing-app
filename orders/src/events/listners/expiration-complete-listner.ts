@@ -17,7 +17,7 @@ export class ExpirationCompleteListner extends Listner<ExpirationCompleteEvent> 
     data: ExpirationCompleteEvent["data"],
     message: Message
   ): Promise<void> {
-    const expiredOrder = await Order.findById(data.orderId);
+    const expiredOrder = await Order.findById(data.orderId).populate("ticket");
     if (!expiredOrder) throw new Error("Order does not exist!");
 
     if (expiredOrder.status === OrderStatus.Complete) return message.ack();
@@ -27,7 +27,7 @@ export class ExpirationCompleteListner extends Listner<ExpirationCompleteEvent> 
 
     await new OrderCancelledPublisher(this.client).publish({
       id: expiredOrder.id,
-      version: expiredOrder.id,
+      version: expiredOrder.version,
       ticket: {
         id: expiredOrder.ticket.id,
       },

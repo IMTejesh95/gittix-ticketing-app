@@ -12,8 +12,9 @@ export class OrderCreatedListner extends Listner<OrderCreatedEvent> {
     message: Message
   ): Promise<void> {
     const delay = new Date(data.expiresAt).getTime() - new Date().getTime();
+    console.log(`expiration::Waiting ${delay} ms to process the job...`);
 
-    expirationQueue.add({ orderId: data.id }, { delay: 5000 });
+    expirationQueue.add({ orderId: data.id }, { delay });
     message.ack();
   }
 }

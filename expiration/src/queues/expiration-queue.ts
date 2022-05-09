@@ -12,9 +12,9 @@ const expirationQueue = new Queue<JobPayload>("order:expiration", {
   },
 });
 
-expirationQueue.process(async ({ data: { orderId } }) => {
+expirationQueue.process(async (job) => {
   await new ExpirationCompletePublisher(stan.client).publish({
-    orderId,
+    orderId: job.data.orderId,
   });
 });
 

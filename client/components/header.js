@@ -22,7 +22,7 @@ const Header = ({ currentUser }) => {
       <Link href="/">
         <a className="navbar-brand">
           <img
-            src="../static/images/gittix-bg-dark.png"
+            src="../public/images/gittix-bg-dark.png"
             style={{
               height: "50px",
             }}
