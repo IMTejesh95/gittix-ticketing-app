@@ -1,6 +1,7 @@
 import mongo from "mongoose";
 import { app } from "./app";
 import { ExpirationCompleteListner } from "./events/listners/expiration-complete-listner";
+import { PaymentCreatedListner } from "./events/listners/payment-created-listner";
 import { TicketCreatedListner } from "./events/listners/ticket-created-listner";
 import { TicketUpdatedListner } from "./events/listners/ticket-updated-listner";
 import { stan } from "./events/nats-client";
@@ -35,6 +36,7 @@ const start = async () => {
     new TicketCreatedListner(stan.client).listen();
     new TicketUpdatedListner(stan.client).listen();
     new ExpirationCompleteListner(stan.client).listen();
+    new PaymentCreatedListner(stan.client).listen();
 
     await mongo.connect(process.env.MONGO_URI);
     console.log("Connected to db!");

@@ -8,6 +8,8 @@ import {
 } from "@tjgittix/common";
 import { Request, Response, Router } from "express";
 import { body } from "express-validator";
+import { stan } from "../events/nats-client";
+import { PaymentCreatedPublisher } from "../events/publishers/payment-created-publisher";
 import { Order } from "../models/order";
 import { Payment } from "../models/payment";
 import { stripe } from "../stripe";
@@ -54,7 +56,13 @@ router.post(
     });
     await payment.save();
 
-    res.status(201).send({ success: true });
+    await new PaymentCreatedPublisher(stan.client).publish({
+      id: payment.id,
+      orderId: payment.orderId,
+      stripeId: payment.stripeId,
+    });
+
+    res.status(201).send(payment);
   }
 );
 
