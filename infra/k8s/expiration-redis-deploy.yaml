@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: expiration-redis
-  namespace: udemy-course
+  namespace: gittix
 spec:
   selector:
     matchLabels:
@@ -25,7 +25,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: expiration-redis-svc
-  namespace: udemy-course
+  namespace: gittix
 spec:
   selector:
     app: expiration-redis

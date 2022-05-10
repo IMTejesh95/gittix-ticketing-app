@@ -1,5 +1,5 @@
 #!/bin/bash
 kubectx minikube
-kubectl create namespace udemy-course || echo "Namesapce udemy-course already exist."
-kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdf -n udemy-course || echo "Secret jwt-secret already exist."
+kubectl create namespace gittix || echo "Namesapce gittix already exist."
+kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdf -n gittix || echo "Secret jwt-secret already exist."
 skaffold dev

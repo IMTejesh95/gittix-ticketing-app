@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: expiration
-  namespace: udemy-course
+  namespace: gittix
 spec:
   replicas: 1
   selector:

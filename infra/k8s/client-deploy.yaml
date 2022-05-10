@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: client-ui
-  namespace: udemy-course
+  namespace: gittix
 spec:
   replicas: 1
   selector:
@@ -21,7 +21,7 @@ apiVersion: v1
 kind: Service
 metadata: 
   name: client-ui-svc
-  namespace: udemy-course
+  namespace: gittix
 spec:
   selector:
     app: client
