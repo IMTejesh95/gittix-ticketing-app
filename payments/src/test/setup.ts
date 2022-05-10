@@ -1,7 +1,5 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
-import { app } from "../app";
-import request from "supertest";
 import jwt from "jsonwebtoken";
 
 declare global {
@@ -10,6 +8,8 @@ declare global {
 }
 
 jest.mock("../events/nats-client.ts");
+process.env.STRIPE_SUCCESS_URL = "https://gittix.dev/success";
+process.env.STRIPE_CANCEL_URL = "https://gittix.dev/failure";
 process.env.STRIPE_SECRET_KEY =
   "sk_test_51Kx6h1SFvjPxOU96X85SKGRcc2E0MAqlwtMVZ1ZJjZeolcnMRVnwXUDkeZja57cUtZFMPg1ctM4QkcmrZ6Kfc1XS00E7zSZwxA";
 
