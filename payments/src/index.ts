@@ -12,6 +12,10 @@ const start = async () => {
     throw new Error("NATS_CLUSTER_ID must be defined!");
   if (!process.env.NATS_CLIENT_ID)
     throw new Error("NATS_CLIENT_ID must be defined!");
+  if (!process.env.STRIPE_SUCCESS_URL)
+    throw new Error("JWT_KEY must be defined!");
+  if (!process.env.STRIPE_CANCEL_URL)
+    throw new Error("MONGO_URI must be defined!");
 
   try {
     await stan.connect(

@@ -77,6 +77,7 @@ orderSchema.statics.build = (attrs: OrderAttrs) => {
     userId: attrs.userId,
     status: attrs.status,
     price: attrs.price,
+    expiresAt: attrs.expiresAt,
   });
 };
 

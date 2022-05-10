@@ -45,7 +45,7 @@ Make sure you use the correct namespace, [refer this](https://github.com/IMTejes
 
 ```bash
 kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdf -n gittix
-kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdf -n gittix
+kubectl create secret generic stripe-secret --from-literal=STRIPE_SECRET_KEY=sk_test_key -n gittix
 ```
 
 ### Start all services in development mode using`skaffold`
