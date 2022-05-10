@@ -1,20 +1,20 @@
 # This is a basic workflow to help you get started with Actions
 
-name: tests
+name: orders-tests
 
 # Controls when the workflow will run
 on:
   pull_request
   
 jobs:
-  build:
+  run-tests:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
 
       - name: install
-        run: cd auth && npm install 
+        run: cd orders && npm install 
       
       - name: tests
-        run: cd auth && npm test
+        run: cd orders && npm test
