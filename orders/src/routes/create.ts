@@ -15,7 +15,7 @@ import { Ticket } from "../models/ticket";
 const router = Router();
 
 const expirationWindowSecs =
-  parseInt(process.env.ORDER_EXP_WINDOW_SECS!) || 15 * 60;
+  parseInt(process.env.ORDER_EXP_WINDOW_SECS!) || 60 * 60;
 
 router.post(
   "/api/orders",

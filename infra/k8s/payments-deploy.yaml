@@ -17,6 +17,10 @@ spec:
         - name: payments
           image:  imtejesh95/payments:latest
           env:
+            - name: STRIPE_SUCCESS_URL
+              value: https://gittix.dev/orders
+            - name: STRIPE_CANCEL_URL
+              value: https://gittix.dev/orders/payment-failure                      
             - name: MONGO_URI
               value: "mongodb://payments-mongo-svc:27017/payments"        
             - name: NATS_URL
