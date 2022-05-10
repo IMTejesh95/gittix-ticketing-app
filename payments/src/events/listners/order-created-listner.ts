@@ -17,6 +17,7 @@ export class OrderCreatedListner extends Listner<OrderCreatedEvent> {
       userId: data.userId,
       status: data.status,
       price: data.ticket.price,
+      expiresAt: data.expiresAt,
     });
     await order.save();
 

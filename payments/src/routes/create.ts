@@ -19,13 +19,10 @@ const router = Router();
 router.post(
   "/api/payments",
   requireAuth,
-  [
-    body("token").not().isEmpty(),
-    body("orderId").not().isEmpty(),
-    validateRequest,
-  ],
+  [body("orderId").not().isEmpty().withMessage("Order ID is required")],
+  validateRequest,
   async (req: Request, res: Response) => {
-    const { token, orderId } = req.body;
+    const { orderId } = req.body;
 
     const order = await Order.findById(orderId);
     if (!order) throw new NotFoundError();
@@ -35,9 +32,10 @@ router.post(
     if (order.status === OrderStatus.Cancelled)
       throw new BadRequestError("Payments not allowed on cancelled order!");
 
-    const checkout = await stripe.checkout.sessions.create({
+    const checkoutSession = await stripe.checkout.sessions.create({
       mode: "payment",
-      success_url: "https://ticketing.dev/success",
+      payment_method_types: ["card"],
+      success_url: "https://ticketing.dev/orders",
       cancel_url: "https://ticketing.dev/failure",
       line_items: [
         {
@@ -47,12 +45,14 @@ router.post(
           quantity: 1,
         },
       ],
+      customer_email: req.currentUser!.email,
+      expires_at: new Date(order.expiresAt).getTime(),
     });
-    // console.log("Payment status: ", checkout.payment_status);
+
     const payment = Payment.build({
       orderId: orderId,
-      stripeId: checkout.id,
-      paymentId: checkout.payment_intent!.toString(),
+      stripeId: checkoutSession.id,
+      paymentId: checkoutSession.payment_intent!.toString(),
     });
     await payment.save();
 
@@ -62,7 +62,8 @@ router.post(
       stripeId: payment.stripeId,
     });
 
-    res.status(201).send(payment);
+    res.status(201).send({ ...payment, redirect_url: checkoutSession.url! });
+    // res.redirect(303, checkoutSession.url!);
   }
 );
 

@@ -8,6 +8,7 @@ interface OrderAttrs {
   userId: string;
   status: OrderStatus;
   price: number;
+  expiresAt: string;
 }
 
 export interface OrderDoc extends mongo.Document {
@@ -15,6 +16,7 @@ export interface OrderDoc extends mongo.Document {
   userId: string;
   status: OrderStatus;
   price: number;
+  expiresAt: string;
 }
 
 interface OrderModel extends mongo.Model<OrderDoc> {
@@ -38,6 +40,10 @@ const orderSchema = new mongo.Schema(
     },
     price: {
       type: Number,
+      required: true,
+    },
+    expiresAt: {
+      type: String,
       required: true,
     },
   },

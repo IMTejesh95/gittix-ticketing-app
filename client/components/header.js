@@ -4,6 +4,8 @@ const Header = ({ currentUser }) => {
   const links = [
     !currentUser && { label: "Sign Up", href: "/auth/signup" },
     !currentUser && { label: "Sign In", href: "/auth/signin" },
+    currentUser && { label: "Sell Tickets", href: "/tickets/new" },
+    currentUser && { label: "My Orders", href: "/orders" },
     currentUser && { label: "Sign Out", href: "/auth/signout" },
   ]
     .filter((linkCfg) => linkCfg)
@@ -22,7 +24,7 @@ const Header = ({ currentUser }) => {
       <Link href="/">
         <a className="navbar-brand">
           <img
-            src="../public/images/gittix-bg-dark.png"
+            src="/images/gittix-bg-dark.png"
             style={{
               height: "50px",
             }}
