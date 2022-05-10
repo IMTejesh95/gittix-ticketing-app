@@ -35,8 +35,8 @@ router.post(
     const checkoutSession = await stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
-      success_url: "https://ticketing.dev/orders",
-      cancel_url: "https://ticketing.dev/failure",
+      success_url: process.env.STRIPE_SUCCESS_URL!,
+      cancel_url: `${process.env.STRIPE_CANCEL_URL!}?order=${orderId}`,
       line_items: [
         {
           name: `ticket-order-${order.id}`,
@@ -46,9 +46,11 @@ router.post(
         },
       ],
       customer_email: req.currentUser!.email,
-      expires_at: new Date(order.expiresAt).getTime(),
+      expires_at: Math.floor(new Date(order.expiresAt).getTime() / 1000),
     });
 
+    console.log("payment status", checkoutSession.payment_status);
+    
     const payment = Payment.build({
       orderId: orderId,
       stripeId: checkoutSession.id,

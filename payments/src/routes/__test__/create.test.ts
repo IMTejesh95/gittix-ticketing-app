@@ -8,7 +8,6 @@ it("checks if order exist else return 404", async () => {
     .post("/api/payments")
     .set("Cookie", signup())
     .send({
-      token: "dj29d2d2u29md",
       orderId: generateMongoId(),
     })
     .expect(404);
@@ -19,6 +18,7 @@ it("throws 401 if user does not own the order", async () => {
     id: generateMongoId(),
     userId: "dj20d3j",
     status: OrderStatus.Created,
+    expiresAt: new Date().toISOString(),
     price: 31,
     version: 0,
   });
@@ -28,7 +28,6 @@ it("throws 401 if user does not own the order", async () => {
     .post("/api/payments")
     .set("Cookie", signup())
     .send({
-      token: "dj29d2d2u29md",
       orderId: order.id,
     })
     .expect(401);
@@ -40,6 +39,7 @@ it("doesn't allow payments for cancelled order, throws 400", async () => {
     id: generateMongoId(),
     userId: userId,
     status: OrderStatus.Cancelled,
+    expiresAt: new Date().toISOString(),
     price: 31,
     version: 0,
   });
@@ -49,7 +49,6 @@ it("doesn't allow payments for cancelled order, throws 400", async () => {
     .post("/api/payments")
     .set("Cookie", signup(userId))
     .send({
-      token: "dj29d2d2u29md",
       orderId: order.id,
     })
     .expect(400);
@@ -57,10 +56,14 @@ it("doesn't allow payments for cancelled order, throws 400", async () => {
 
 it("creates a charge for order", async () => {
   const userId = generateMongoId();
+  const exp = new Date();
+  exp.setSeconds(exp.getSeconds() + 60 * 60);
+
   const order = Order.build({
     id: generateMongoId(),
     userId: userId,
     status: OrderStatus.Created,
+    expiresAt: exp.toISOString(),
     price: 16,
     version: 0,
   });
@@ -70,7 +73,6 @@ it("creates a charge for order", async () => {
     .post("/api/payments")
     .set("Cookie", signup(userId))
     .send({
-      token: "tok_visa",
       orderId: order.id,
     })
     .expect(201);
