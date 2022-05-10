@@ -17,4 +17,4 @@ jobs:
         run: cd auth && npm install 
       
       - name: tests
-        run: npm test
+        run: cd auth && npm test
