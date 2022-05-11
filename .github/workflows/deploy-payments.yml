@@ -1,11 +1,11 @@
-name: deploy-auth
+name: deploy-payments
 
 on:
   push:
     branches:
       - "main"
     paths:
-      - "auth/**"
+      - "payments/**"
 
 jobs:
   build:
@@ -17,10 +17,10 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Build Docker Image
-        run: cd auth && docker build -t imtejesh95/auth .
+        run: cd payments && docker build -t imtejesh95/payments .
 
       - name: Docker Login
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
       - name: Push Docker Image
-        run: docker push imtejesh95/auth       
+        run: docker push imtejesh95/payments       
