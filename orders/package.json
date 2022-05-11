@@ -1,5 +1,5 @@
 {
-  "name": "orders",
+  "name": "@gittix/orders",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

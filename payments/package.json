@@ -1,5 +1,5 @@
 {
-  "name": "payments",
+  "name": "@gittix/payments",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
