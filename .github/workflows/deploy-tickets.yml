@@ -1,11 +1,11 @@
-name: deploy-auth
+name: deploy-tickets
 
 on:
   push:
     branches:
       - "main"
     paths:
-      - "auth/**"
+      - "tickets/**"
 
 jobs:
   build:
@@ -17,10 +17,10 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Build Docker Image
-        run: cd auth && docker build -t imtejesh95/auth .
+        run: cd tickets && docker build -t imtejesh95/tickets .
 
       - name: Docker Login
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
       - name: Push Docker Image
-        run: docker push imtejesh95/auth       
+        run: docker push imtejesh95/tickets       
