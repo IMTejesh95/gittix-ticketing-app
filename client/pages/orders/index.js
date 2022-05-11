@@ -14,13 +14,7 @@ const ListOrders = ({ orders }) => {
           {orders.map((order) => (
             <tr key={order.id}>
               <td>{order.ticket.title}</td>
-              <td
-                style={{
-                  color: order.status === "completed" ? "red" : "green",
-                }}
-              >
-                {order.status}
-              </td>
+              <td>{order.status}</td>
               <td> &#8377; {order.ticket.price}</td>
             </tr>
           ))}

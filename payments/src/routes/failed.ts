@@ -11,7 +11,6 @@ router.delete(
   requireAuth,
   async (req: Request, res: Response) => {
     const { orderId } = req.params;
-    console.log("In payment delete route: ", orderId);
     const payment = await Payment.findOne({ orderId });
     if (!payment) throw new NotFoundError();
 

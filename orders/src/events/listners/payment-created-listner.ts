@@ -19,8 +19,10 @@ export class PaymentCreatedListner extends Listner<PaymentCreatedEvent> {
     const order = await Order.findById(data.orderId);
     if (!order) throw new Error("Order does not exist!");
 
-    order.set({ status: OrderStatus.Complete });
+    order.set({ status: OrderStatus.AwaitingPayment });
     await order.save();
+
+    // Emit Order Awaiting Payment Event
 
     message.ack();
   }

@@ -8,6 +8,8 @@ import {
 } from "@tjgittix/common";
 import { Request, Response, Router } from "express";
 import { body } from "express-validator";
+import { stan } from "../events/nats-client";
+import { PaymentCreatedPublisher } from "../events/publishers/payment-created-publisher";
 import { Order } from "../models/order";
 import { Payment } from "../models/payment";
 import { stripe } from "../stripe";

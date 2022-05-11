@@ -6,7 +6,7 @@ import cookieSession from "cookie-session";
 import { currentUser, errorhandler, NotFoundError } from "@tjgittix/common";
 import { createPaymentSessionRouter } from "./routes/create";
 import { paymentSuccessCallbackRouter } from "./routes/success";
-import { deletePaymentRouter } from "./routes/delete";
+import { deletePaymentRouter } from "./routes/failed";
 
 const app = express();
 app.set("trust proxy", true);

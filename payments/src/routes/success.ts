@@ -1,13 +1,13 @@
 import { BadRequestError, NotFoundError, requireAuth } from "@tjgittix/common";
 import { Request, Response, Router } from "express";
 import { stan } from "../events/nats-client";
-import { PaymentCreatedPublisher } from "../events/publishers/payment-created-publisher";
+import { PaymentSuccessPublisher } from "../events/publishers/payment-success-publisher";
 import { Payment } from "../models/payment";
 import { stripe } from "../stripe";
 
-export const paymentSuccessCallbackRouter = Router();
+const router = Router();
 
-paymentSuccessCallbackRouter.get(
+router.get(
   "/api/payments/success/:orderId",
   requireAuth,
   async (req: Request, res: Response) => {
@@ -25,13 +25,15 @@ paymentSuccessCallbackRouter.get(
     if (
       checkoutSession.status === "complete" &&
       checkoutSession.payment_status === "paid"
-    )
-      await new PaymentCreatedPublisher(stan.client).publish({
-        id: payment.id,
+    ) {
+      await new PaymentSuccessPublisher(stan.client).publish({
         orderId: payment.orderId,
         checkoutSessionId: payment.checkoutSessionId,
       });
+    }
 
     res.status(200);
   }
 );
+
+export { router as paymentSuccessCallbackRouter };
