@@ -17,7 +17,7 @@ export class PaymentSuccessListner extends Listner<PaymentSuccessEvent> {
     data: PaymentSuccessEvent["data"],
     message: Message
   ): Promise<void> {
-    const order = await Order.findById(data.orderId);
+    const order = await Order.findById(data.orderId).populate("ticket");
     if (!order) throw new Error("Order does not exist");
 
     order.set({ status: OrderStatus.Complete });

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import router from "next/router";
 
 const PaymentSuccessPage = () => {
   return (
@@ -14,9 +13,7 @@ const PaymentSuccessPage = () => {
 
 PaymentSuccessPage.getInitialProps = async (context, client) => {
   const { order } = context.query;
-  const resp = await client.get(`/api/payments/success/${order}`);
-  if (resp.status === 200) router.push("/orders");
-  else router.push("/orders/[orderId]", `/orders/${order}`);
+  await client.get(`/api/payments/success/${order}`);
 };
 
 export default PaymentSuccessPage;

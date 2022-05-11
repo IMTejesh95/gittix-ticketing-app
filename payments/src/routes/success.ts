@@ -11,6 +11,7 @@ router.get(
   "/api/payments/success/:orderId",
   requireAuth,
   async (req: Request, res: Response) => {
+    console.log("/api/payments/success::handler: ", req.params.orderId);
     const payment = await Payment.findOne({ orderId: req.params.orderId });
     if (!payment) throw new NotFoundError();
 
@@ -31,8 +32,9 @@ router.get(
         checkoutSessionId: payment.checkoutSessionId,
       });
     }
+    console.log("/api/payments/success::handler: responded");
 
-    res.status(200);
+    res.redirect("/orders");
   }
 );
 
