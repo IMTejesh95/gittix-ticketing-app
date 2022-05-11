@@ -13,6 +13,7 @@ export default ({ url, method, body, onSuccess }) => {
 
       return resp.data;
     } catch (error) {
+      console.log(error);
       setErrors(
         <div className="alert alert-danger">
           <h4>Oops!</h4>

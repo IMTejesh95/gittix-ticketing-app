@@ -1,5 +1,5 @@
 import Link from "next/link";
-const FailurePage = () => {
+const PaymentFailurePage = () => {
   return (
     <div>
       <h2 style={{ color: "red" }}> Payment Failed to Process</h2>
@@ -10,7 +10,9 @@ const FailurePage = () => {
   );
 };
 
-FailurePage.getInitialProps = async (context, client) => {
-  console.log(context.query);
-  // Call backend to mark order payment as failed and release the ticket
+PaymentFailurePage.getInitialProps = async (context, client) => {
+  const { order } = context.query;
+  await client.delete(`/api/payments/${order}`);
 };
+
+export default PaymentFailurePage;
