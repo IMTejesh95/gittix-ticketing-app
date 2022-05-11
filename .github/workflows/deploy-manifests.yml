@@ -12,8 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     # env:
     #   DIGITAL_OCEAN_ACCESS_TOKEN: ${{ secrets.DIGITAL_OCEAN_ACCESS_TOKEN }}
-    # steps:
-      # - uses: actions/checkout@v3
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "Nothing to deploy for now!"
 
       # - uses: digitalocean/action-doctl@v2
       #   with:
