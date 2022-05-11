@@ -10,6 +10,7 @@ router.delete(
   "/api/payments/:orderId",
   requireAuth,
   async (req: Request, res: Response) => {
+    console.log("/api/payments/failed::handler: ", req.params.orderId);
     const { orderId } = req.params;
     const payment = await Payment.findOne({ orderId });
     if (!payment) throw new NotFoundError();
@@ -18,7 +19,9 @@ router.delete(
     await new PaymentFailedPublisher(stan.client).publish({
       orderId,
     });
-
-    res.status(204);
+    console.log("/api/payments/failed::handler: responded");
+    res.redirect("/orders");
   }
 );
+
+export { router as deletePaymentRouter };

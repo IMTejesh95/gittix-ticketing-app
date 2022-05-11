@@ -35,13 +35,13 @@ router.post(
     const checkoutSession = await stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
-      success_url: process.env.STRIPE_SUCCESS_URL!,
+      success_url: `${process.env.STRIPE_SUCCESS_URL!}?order=${orderId}`,
       cancel_url: `${process.env.STRIPE_CANCEL_URL!}?order=${orderId}`,
       line_items: [
         {
           name: `ticket-order-${order.id}`,
           currency: "INR",
-          amount: order.price * 100,
+          amount: Math.floor(order.price * 100),
           quantity: 1,
         },
       ],
@@ -49,24 +49,14 @@ router.post(
       expires_at: Math.floor(new Date(order.expiresAt).getTime() / 1000),
     });
 
-    console.log("payment status", checkoutSession.payment_status);
-    
     const payment = Payment.build({
       orderId: orderId,
-      stripeId: checkoutSession.id,
-      paymentId: checkoutSession.payment_intent!.toString(),
+      checkoutSessionId: checkoutSession.id,
     });
     await payment.save();
 
-    await new PaymentCreatedPublisher(stan.client).publish({
-      id: payment.id,
-      orderId: payment.orderId,
-      stripeId: payment.stripeId,
-    });
-
     res.status(201).send({ ...payment, redirect_url: checkoutSession.url! });
-    // res.redirect(303, checkoutSession.url!);
   }
 );
 
-export { router as createChargeRouter };
+export { router as createPaymentSessionRouter };

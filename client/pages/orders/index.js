@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const ListOrders = ({ orders }) => {
   return (
     <div>
@@ -8,20 +10,24 @@ const ListOrders = ({ orders }) => {
             <th>Ticket</th>
             <th>Status</th>
             <th>Amount</th>
+            <th>Link</th>
           </tr>
         </thead>
         <tbody>
           {orders.map((order) => (
             <tr key={order.id}>
               <td>{order.ticket.title}</td>
-              <td
-                style={{
-                  color: order.status === "completed" ? "red" : "green",
-                }}
-              >
-                {order.status}
+              <td>
+                {order.status == "created"
+                  ? "Awaiting Payment"
+                  : order.status.toUpperCase()}
               </td>
               <td> &#8377; {order.ticket.price}</td>
+              <td>
+                <Link href="/orders/[orderId]" as={`/orders/${order.id}`}>
+                  <a>Details</a>
+                </Link>
+              </td>
             </tr>
           ))}
         </tbody>

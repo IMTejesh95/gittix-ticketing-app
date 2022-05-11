@@ -4,11 +4,14 @@ import { json } from "body-parser";
 import cookieSession from "cookie-session";
 
 import { currentUser, errorhandler, NotFoundError } from "@tjgittix/common";
-import { createChargeRouter } from "./routes/create";
+import { createPaymentSessionRouter } from "./routes/create";
+import { paymentSuccessCallbackRouter } from "./routes/success";
+import { deletePaymentRouter } from "./routes/failed";
 
 const app = express();
 app.set("trust proxy", true);
-// middlewares
+
+// middlewares attach
 app.use(json());
 app.use(
   cookieSession({
@@ -19,7 +22,9 @@ app.use(
 app.use(currentUser);
 
 // routes
-app.use(createChargeRouter);
+app.use(createPaymentSessionRouter);
+app.use(paymentSuccessCallbackRouter);
+app.use(deletePaymentRouter);
 
 app.get("*", () => {
   throw new NotFoundError();

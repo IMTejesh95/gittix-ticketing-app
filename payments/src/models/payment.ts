@@ -2,14 +2,12 @@ import mongoose from "mongoose";
 
 interface PaymentAttrs {
   orderId: string;
-  stripeId: string;
-  paymentId: string | null;
+  checkoutSessionId: string;
 }
 
 export interface PaymentDoc extends mongoose.Document {
   orderId: string;
-  stripeId: string;
-  paymentId: string | null;
+  checkoutSessionId: string;
 }
 
 interface PaymentModel extends mongoose.Model<PaymentDoc> {
@@ -22,11 +20,8 @@ const paymentSchema = new mongoose.Schema(
       required: true,
       type: String,
     },
-    stripeId: {
+    checkoutSessionId: {
       required: true,
-      type: String,
-    },
-    paymentId: {
       type: String,
     },
   },

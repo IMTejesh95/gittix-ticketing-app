@@ -54,7 +54,7 @@ it("doesn't allow payments for cancelled order, throws 400", async () => {
     .expect(400);
 });
 
-it("creates a charge for order", async () => {
+it("creates a payment checkout session for order", async () => {
   const userId = generateMongoId();
   const exp = new Date();
   exp.setSeconds(exp.getSeconds() + 60 * 60);
@@ -82,5 +82,5 @@ it("creates a charge for order", async () => {
   });
 
   expect(payment!).not.toBeNull();
-  expect(payment!.stripeId).not.toBeNull();
+  expect(payment!.checkoutSessionId).not.toBeNull();
 });

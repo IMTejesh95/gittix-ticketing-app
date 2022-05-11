@@ -38,18 +38,21 @@ const ShowOrder = ({ order, currentUser }) => {
   return (
     <div>
       <h1>Purchase Order for - {order.ticket.title}</h1>
-      <h3>Time left to pay: {timeLeft} seconds</h3>
 
-      {/* <StripeCheckout
-        token={({ id }) => doRequest({ token: id })}
-        stripeKey=""
-        amount={parseFloat(order.ticket.price * 100)}
-        email={currentUser.email}
-      /> */}
-      {errors}
-      <button onClick={() => doRequest()} className="btn btn-success mt-3">
-        Pay &#8377; {order.ticket.price}
-      </button>
+      {order.status == "created" ? (
+        <>
+          <h3>Time left to pay: {timeLeft} seconds</h3>
+          {errors}
+          <button onClick={() => doRequest()} className="btn btn-success mt-3">
+            Pay &#8377; {order.ticket.price}
+          </button>
+        </>
+      ) : (
+        <>
+          <h3>Status: {order.status}</h3>
+          <h3>Amount: {order.ticket.price}</h3>
+        </>
+      )}
     </div>
   );
 };
