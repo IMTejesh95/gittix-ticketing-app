@@ -4,7 +4,9 @@ name: tickets-tests
 
 # Controls when the workflow will run
 on:
-  pull_request
+  pull_request:
+    paths:
+      - 'tickets/**'
   
 jobs:
   run-tests:

@@ -4,7 +4,9 @@ name: auth-tests
 
 # Controls when the workflow will run
 on:
-  pull_request
+  pull_request:
+    paths:
+      - 'auth/**'
   
 jobs:
   run-tests:
