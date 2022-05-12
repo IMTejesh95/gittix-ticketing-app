@@ -13,6 +13,7 @@ jobs:
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      # DIGITAL_OCEAN_ACCESS_TOKEN: ${{ secrets.DIGITAL_OCEAN_ACCESS_TOKEN }}
     steps:
       - uses: actions/checkout@v3
 
@@ -24,3 +25,13 @@ jobs:
 
       - name: Push Docker Image
         run: docker push imtejesh95/expiration       
+
+      # - uses: digitalocean/action-doctl@v2
+      #   with:
+      #     token: $DIGITAL_OCEAN_ACCESS_TOKEN   
+
+      # - name: Kubernetes Cluster Config
+      #   run: doctl kubernetes cluster kubeconfig save gittix-prod
+
+      # - name: Deployment Rolling Update 
+      #   run: kubectl rollout restart deployment expiration

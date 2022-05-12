@@ -1,11 +1,11 @@
-name: deploy-tickets
+name: deploy-client
 
 on:
   push:
     branches:
       - "main"
     paths:
-      - "tickets/**"
+      - "client/**"
 
 jobs:
   build:
@@ -18,13 +18,13 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Build Docker Image
-        run: cd tickets && docker build -t imtejesh95/tickets .
+        run: cd client && docker build -t imtejesh95/client .
 
       - name: Docker Login
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
       - name: Push Docker Image
-        run: docker push imtejesh95/tickets       
+        run: docker push imtejesh95/client
 
       # - uses: digitalocean/action-doctl@v2
       #   with:
@@ -34,4 +34,4 @@ jobs:
       #   run: doctl kubernetes cluster kubeconfig save gittix-prod
 
       # - name: Deployment Rolling Update 
-      #   run: kubectl rollout restart deployment tickets
+      #   run: kubectl rollout restart deployment client
