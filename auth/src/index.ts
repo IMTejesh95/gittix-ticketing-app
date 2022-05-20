@@ -7,7 +7,6 @@ const start = async () => {
   if (!process.env.MONGO_URI) throw new Error("MONGO_URI must be defined!");
 
   try {
-    console.log("Starting up...");
     await mongo.connect(process.env.MONGO_URI);
     console.log("Connected to db!");
   } catch (error) {
