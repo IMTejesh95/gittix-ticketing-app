@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: client-ui
-          image: imtejesh95/react-client-app
+          image: imtejesh95/client
 ---
 apiVersion: v1
 kind: Service
