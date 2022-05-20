@@ -25,7 +25,6 @@ jobs:
       - name: Push Docker Image
         run: docker push imtejesh95/client
 
-      - name: Install doctl 
       - uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITAL_OCEAN_ACCESS_TOKEN }}

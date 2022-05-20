@@ -14,7 +14,6 @@ jobs:
       - uses: actions/checkout@v3
       - run: echo "Nothing to deploy for now!"
 
-      - name: Install doctl 
       - uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITAL_OCEAN_ACCESS_TOKEN }}   
