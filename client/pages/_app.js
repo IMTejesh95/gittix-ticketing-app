@@ -15,7 +15,7 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
 
 AppComponent.getInitialProps = async (appContext) => {
   // appContext = [Component, ctx]
-  console.log("@gittix/client starting up..");
+  console.log("@gittix/client starting up...");
   const client = axiosClient(appContext.ctx);
   const { data } = await client.get("/api/users/currentuser");
 
