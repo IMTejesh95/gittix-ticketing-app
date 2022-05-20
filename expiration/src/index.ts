@@ -2,7 +2,7 @@ import { OrderCreatedListner } from "./events/listners/order-created-listner";
 import { stan } from "./events/nats-client";
 
 const start = async () => {
-  console.log("@gittix/expiration starting up..");
+  console.log("@gittix/expiration starting up...");
   if (!process.env.NATS_URL) throw new Error("NATS_URL must be defined!");
   if (!process.env.NATS_CLUSTER_ID)
     throw new Error("NATS_CLUSTER_ID must be defined!");

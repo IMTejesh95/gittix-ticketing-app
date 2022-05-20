@@ -8,7 +8,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regx: "true"
 spec:
   rules:
-    - host: gittix.xyz
+    - host: gittix.com
       http:
         paths:
           - path: /api/users

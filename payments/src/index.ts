@@ -6,7 +6,7 @@ import { OrderCreatedListner } from "./events/listners/order-created-listner";
 import { stan } from "./events/nats-client";
 
 const start = async () => {
-  console.log("@gittix/payments starting up..");
+  console.log("@gittix/payments starting up...");
   if (!process.env.JWT_KEY) throw new Error("JWT_KEY must be defined!");
   if (!process.env.MONGO_URI) throw new Error("MONGO_URI must be defined!");
   if (!process.env.NATS_URL) throw new Error("NATS_URL must be defined!");
