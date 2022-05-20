@@ -33,4 +33,4 @@ jobs:
         run: doctl kubernetes cluster kubeconfig save gittix
 
       - name: Deployment Rolling Update 
-        run: kubectl rollout restart deployment client
+        run: kubectl rollout restart deployment client -n gittix
